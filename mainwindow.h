@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
-#include <QBarcode>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -25,6 +25,9 @@ private slots:
     void onSellItemClicked();
     void onNewRepairRequestClicked();
     void onRegisterCustomerClicked();
+    void onSearchCustomer();
+    void onBarcodeScanned();
+    void updateDateTime();
 
 private:
     Ui::MainWindow *ui;
@@ -32,12 +35,14 @@ private:
     QSqlTableModel *inventoryModel;
     QSqlTableModel *repairModel;
     QSqlTableModel *customerModel;
-    QBarcode barcode;
+    QTimer *dateTimeTimer;
 
     void setupDatabase();
     void setupModels();
     void setupConnections();
     QString generateBarcode();
     bool validateInput(const QStringList &inputs);
+    void updateCustomerPoints(int customerId, int points);
+    void showNotification(const QString &message);
 };
 #endif // MAINWINDOW_H
